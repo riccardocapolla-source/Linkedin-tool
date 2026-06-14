@@ -244,22 +244,17 @@
     <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Profilo
   </button>
   <div class="nav-right">
-    <button class="nav-btn" id="notion-btn" onclick="toggleSettings()">Notion</button>
-    <button class="nav-btn" onclick="toggleApiPanel()">API Key</button>
+    <button class="nav-btn" id="settings-btn" onclick="toggleSettings()">
+      <svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.75;vertical-align:-1px;margin-right:4px;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Impostazioni
+    </button>
   </div>
 </nav>
 
 <!-- ══ PAGE: GENERATE ══ -->
 <div class="page active" id="page-generate">
-  <div class="banner warning" id="api-banner">
-    <p>Inserisci la tua API key Anthropic. La trovi su <a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com → API Keys</a>.</p>
-    <div class="key-row">
-      <input type="password" id="api-key-input" placeholder="sk-ant-api03-..." />
-      <button class="btn btn-primary" onclick="saveApiKey()">Salva</button>
-    </div>
-  </div>
-  <div class="banner warning" id="notion-banner">
-    <p>Notion non configurato. Clicca <strong>Notion</strong> in alto a destra per aggiungere il token.</p>
+  <div class="banner warning" id="setup-banner">
+    <p id="setup-banner-text">Configura le impostazioni per iniziare. Clicca <strong>Impostazioni</strong> in alto a destra.</p>
   </div>
   <div class="context-bar" id="profile-bar">
     <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -437,6 +432,12 @@
     <h3>Impostazioni</h3>
 
     <div style="margin-bottom:1.25rem;">
+      <span class="label">API Key Anthropic</span>
+      <input type="password" id="api-key-input" placeholder="sk-ant-api03-..." />
+      <p style="font-size:12px;color:var(--text-tertiary);margin-top:6px;">La trovi su <a href="https://console.anthropic.com/settings/keys" target="_blank" style="color:var(--blue);">console.anthropic.com → API Keys</a></p>
+    </div>
+
+    <div style="margin-bottom:1.25rem;">
       <span class="label">Notion Integration Token</span>
       <input type="password" id="notion-token-input" placeholder="secret_..." />
       <p style="font-size:12px;color:var(--text-tertiary);margin-top:6px;">Crea l'integration su <a href="https://www.notion.so/profile/integrations" target="_blank" style="color:var(--blue);">notion.so/profile/integrations</a></p>
@@ -444,7 +445,7 @@
 
     <div style="border-top:1px solid var(--border);padding-top:1.25rem;margin-bottom:1.25rem;">
       <span class="label">Backup impostazioni</span>
-      <p style="font-size:13px;color:var(--text-secondary);margin-bottom:10px;line-height:1.5;">Esporta le tue impostazioni (API key, token Notion, profilo) in un file. Importalo dopo ogni aggiornamento dello strumento per non doverle reinserire.</p>
+      <p style="font-size:13px;color:var(--text-secondary);margin-bottom:10px;line-height:1.5;">Esporta le impostazioni in un file. Importalo dopo ogni aggiornamento dello strumento per non doverle reinserire.</p>
       <div style="display:flex;gap:8px;">
         <button class="btn btn-secondary" style="flex:1;" onclick="exportConfig()">
           <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.75;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -461,7 +462,7 @@
 
     <div class="modal-footer">
       <button class="btn btn-secondary" style="flex:1;" onclick="closeModalDirect('settings-modal')">Chiudi</button>
-      <button class="btn btn-primary" style="flex:1;" onclick="saveNotionToken()">Salva token</button>
+      <button class="btn btn-primary" style="flex:1;" onclick="saveAllSettings()">Salva</button>
     </div>
   </div>
 </div>
@@ -696,34 +697,39 @@ function showPage(id, tab) {
 // ═══════════════════════════════════════════════
 // SETTINGS / API KEYS
 // ═══════════════════════════════════════════════
-function toggleApiPanel() {
-  const b = document.getElementById('api-banner');
-  b.classList.toggle('visible');
-  if (b.classList.contains('visible')) {
-    const k = LS.str('anthropic_api_key');
-    if (k) document.getElementById('api-key-input').value = k;
-  }
-}
+function toggleApiPanel() { toggleSettings(); }
 function saveApiKey() {
   const k = document.getElementById('api-key-input').value.trim();
   if (!k.startsWith('sk-ant-')) { alert('Chiave non valida. Deve iniziare con sk-ant-'); return; }
   LS.set('anthropic_api_key', k);
-  document.getElementById('api-banner').classList.remove('visible');
 }
 function toggleSettings() {
   const m = document.getElementById('settings-modal');
   m.classList.add('visible');
+  const k = LS.str('anthropic_api_key');
+  if (k) document.getElementById('api-key-input').value = k;
   const t = notionToken();
   if (t) document.getElementById('notion-token-input').value = t;
 }
-function saveNotionToken() {
+function saveAllSettings() {
+  const k = document.getElementById('api-key-input').value.trim();
   const t = document.getElementById('notion-token-input').value.trim();
-  if (!t.startsWith('secret_') && !t.startsWith('ntn_')) { alert('Token non valido. Deve iniziare con secret_ o ntn_'); return; }
-  localStorage.setItem('notion_token', t);
-  closeModalDirect('settings-modal');
-  document.getElementById('notion-btn').classList.add('notion-connected');
-  document.getElementById('notion-banner').classList.remove('visible');
+  let saved = [];
+  if (k) {
+    if (!k.startsWith('sk-ant-')) { alert('API key non valida. Deve iniziare con sk-ant-'); return; }
+    LS.set('anthropic_api_key', k);
+    saved.push('API key');
+  }
+  if (t) {
+    if (!t.startsWith('secret_') && !t.startsWith('ntn_')) { alert('Token Notion non valido. Deve iniziare con secret_ o ntn_'); return; }
+    localStorage.setItem('notion_token', t);
+    document.getElementById('settings-btn').style.borderColor = 'var(--success)';
+    saved.push('token Notion');
+  }
+  updateSetupBanner();
+  if (saved.length) showConfigStatus(saved.join(' e ') + ' salvati.', 'success');
 }
+function saveNotionToken() { saveAllSettings(); }
 
 // ═══════════════════════════════════════════════
 // MODALS
@@ -1551,14 +1557,13 @@ function importConfig(input) {
       if (config.notion_token) localStorage.setItem('notion_token', config.notion_token);
       if (config.li_profile) LS.set('li_profile', config.li_profile);
       // Refresh UI
-      if (notionToken()) {
-        document.getElementById('notion-btn').classList.add('notion-connected');
-        document.getElementById('notion-banner').classList.remove('visible');
-      }
-      if (LS.str('anthropic_api_key')) document.getElementById('api-banner').classList.remove('visible');
+      const k = LS.str('anthropic_api_key');
+      if (k) document.getElementById('api-key-input').value = k;
+      const t = notionToken();
+      if (t) document.getElementById('notion-token-input').value = t;
+      updateSetupBanner();
       updateProfileBar();
       loadProfileForm();
-      document.getElementById('notion-token-input').value = config.notion_token || '';
       showConfigStatus('Impostazioni ripristinate correttamente.', 'success');
     } catch(err) {
       showConfigStatus('Errore: ' + err.message, 'error');
@@ -1589,10 +1594,26 @@ function formatDate(str) {
 // ═══════════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════════
+function updateSetupBanner() {
+  const hasKey = !!LS.str('anthropic_api_key');
+  const hasNotion = !!notionToken();
+  const banner = document.getElementById('setup-banner');
+  const btn = document.getElementById('settings-btn');
+  if (hasKey && hasNotion) {
+    banner.classList.remove('visible');
+    btn.style.borderColor = 'var(--success)';
+    btn.style.color = 'var(--success-text)';
+  } else {
+    banner.classList.add('visible');
+    const missing = [];
+    if (!hasKey) missing.push('API key Anthropic');
+    if (!hasNotion) missing.push('token Notion');
+    document.getElementById('setup-banner-text').innerHTML = 'Configura: <strong>' + missing.join(' e ') + '</strong>. Clicca <strong>Impostazioni</strong> in alto a destra.';
+  }
+}
+
 (function init() {
-  if (!LS.str('anthropic_api_key')) document.getElementById('api-banner').classList.add('visible');
-  if (!notionToken()) document.getElementById('notion-banner').classList.add('visible');
-  else document.getElementById('notion-btn').classList.add('notion-connected');
+  updateSetupBanner();
   updateProfileBar();
   loadProfileForm();
   loadLibraryForPicker();
